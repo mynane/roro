@@ -1,0 +1,22 @@
+// {{modulename | firstUpper}}/index.ts
+import React from 'react'
+import { {{modulename | firstUpper}}Context, use{{modulename | firstUpper}}State } from './model';
+
+import styles from './index.less'
+
+export interface I{{modulename | firstUpper}}Props {
+  [key: string]: any;
+}
+  
+const {{modulename | firstUpper}}: React.FC<I{{modulename | firstUpper}}Props> = props => {
+  const { } = props;
+  const [state, funs] = use{{modulename | firstUpper}}State();
+
+  return (
+    <{{modulename | firstUpper}}Context.Provider value={[state, funs]}>
+      <div className={styles.{{modulename}}}>demo</div>
+    </{{modulename | firstUpper}}Context.Provider>
+  );
+};
+
+export default React.meno({{modulename | firstUpper}})

@@ -1,0 +1,96 @@
+import qs from 'qs';
+import request, { get, post, put, del } from '@/utils/request';
+import { Res } from '@/typings';
+
+const servicename = '{{servicename}}';
+const modulename = '{{modulename}}';
+
+export type I{{modulename | firstUpper}}List = any;
+
+type TListType = {
+  lists: I{{modulename | firstUpper}}List[];
+  page: number;
+  page_size: number;
+};
+
+/**
+ * 获取{{modulename}}列表
+ * @param values
+ * @returns
+ */
+export async function get{{modulename | firstUpper}}Lists(values: any): Promise<Res<TListType>> {
+  return get(`/${servicename}/get_${modulename}_list?${qs.stringify(values)}`);
+}
+
+/**
+ * 获取{{modulename}}详情
+ * @param values
+ * @returns
+ */
+export async function get{{modulename | firstUpper}}Detail(values: any): Promise<Res<IList>> {
+  return get(`/${servicename}/get_${modulename}?${qs.stringify(values)}`);
+}
+
+/**
+ * 删除{{modulename}}
+ * @param values
+ * @returns
+ */
+export async function del{{modulename | firstUpper}}(values: any): Promise<Res<any>> {
+  return del(`/${servicename}/del_${modulename}`, values);
+}
+
+/**
+ * 更新{{modulename}}
+ * @param values
+ * @returns
+ */
+export async function update{{modulename | firstUpper}}(values: any): Promise<Res<any>> {
+  return put(`/${servicename}/update_${modulename}`, { info: values });
+}
+
+/**
+ * 创建{{modulename}}
+ * @param values
+ * @returns
+ */
+export async function create{{modulename | firstUpper}}(values: any): Promise<Res<any>> {
+  return post(`/${servicename}/create_${modulename}`, { info: values });
+}
+
+/**
+ * 修改{{modulename}}状态
+ * @param values
+ * @returns
+ */
+export async function switch{{modulename | firstUpper}}(values: any): Promise<Res<any>> {
+  return put(`/${servicename}/switch_${modulename}`, values);
+}
+
+/**
+ * 导出{{modulename}}
+ * @param values
+ * @returns
+ */
+export async function export{{modulename | firstUpper}}List(values: any): Promise<any> {
+  return request(`/${servicename}/export_${modulename}_list`, {
+    method: 'POST',
+    body: JSON.stringify(values),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    responseType: 'blob',
+    getResponse: true,
+  })
+    .then((res: { data: Blob; response: any }) => {
+      let fileName = res.response.headers.get('Content-Disposition').split('=')[1];
+      fileName = decodeURIComponent(fileName);
+      const a = document.createElement('a');
+      const url = window.URL.createObjectURL(res.data);
+      a.href = url;
+      a.download = fileName;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    })
+    .catch(() => {});
+}

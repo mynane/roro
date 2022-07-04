@@ -1,0 +1,17 @@
+// {{modulename | firstUpper}}/index.ts
+import React from 'react'
+import styles from './index.less'
+
+export interface I{{modulename | firstUpper}}Props {
+  [key: string]: any;
+}
+  
+const {{modulename | firstUpper}}: React.FC<I{{modulename | firstUpper}}Props> = props => {
+  const { } = props;
+
+  return (
+    <div className={styles.{{modulename | firstLower}}}>demo</div>
+  );
+};
+
+export default React.meno({{modulename | firstUpper}})
