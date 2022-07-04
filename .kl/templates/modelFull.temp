@@ -1,0 +1,145 @@
+// {{modulename | firstUpper}}/model/index.ts
+import { isSuccess } from "@/utils";
+import React, { createContext, useReducer } from "react";
+import { message } from '@xiaoduo/components';
+import * as Apis from '@/services/{{modulename}}';
+
+type I{{modulename | firstUpper}}Action = {
+  [key: string]: any;
+};
+
+type T{{modulename | firstUpper}}OutFn = {
+  get{{modulename | firstUpper}}Lists: (...args: any[]) => any;
+  get{{modulename | firstUpper}}Detail: (...args: any[]) => any;
+  del{{modulename | firstUpper}}: (...args: any[]) => any;
+  update{{modulename | firstUpper}}: (...args: any[]) => any;
+  create{{modulename | firstUpper}}: (...args: any[]) => any;
+  switch{{modulename | firstUpper}}: (...args: any[]) => any;
+  export{{modulename | firstUpper}}List: (...args: any[]) => any;
+};
+
+const {{modulename | firstUpper}}InitialSate = {
+  lists: [],
+  total: 0,
+  page: 1,
+  page_size: 30,
+};
+
+type I{{modulename | firstUpper}}State = typeof {{modulename | firstUpper}}InitialSate;
+
+export const use{{modulename | firstUpper}}State = (): [I{{modulename | firstUpper}}State, T{{modulename | firstUpper}}OutFn] => {
+  const [state, dispatch] = useReducer(
+    (ostate: I{{modulename | firstUpper}}State, action: I{{modulename | firstUpper}}Action) => {
+      return { ...ostate, ...action };
+    },
+    {
+      ...{{modulename | firstUpper}}InitialSate,
+    }
+  );
+
+  const get{{modulename | firstUpper}}Lists = async () => {
+    const { page, page_size } = state;
+    try {
+      const { code, data = { lists: [], total: 1 } } = await Apis.get{{modulename | firstUpper}}Lists({ page, page_size });
+
+      if (isSuccess(code)) {
+        const { lists, total } = data;
+        dispatch({ lists, total });
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const get{{modulename | firstUpper}}Detail = async (id: string) => {
+    try {
+      const { code, data = {} } = await Apis.get{{modulename | firstUpper}}Detail({ id });
+
+      if (isSuccess(code)) {
+        dispatch({ detail: data });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const del{{modulename | firstUpper}} = async (id: string) => {
+    try {
+      const { code } = await Apis.del{{modulename | firstUpper}}({ id });
+
+      if (isSuccess(code)) {
+        return message.success('删除成功');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    message.error('删除失败');
+  };
+
+  const update{{modulename | firstUpper}} = async (values: Apis.I{{modulename | firstUpper}}List) => {
+    try {
+      const { code } = await Apis.update{{modulename | firstUpper}}(values);
+
+      if (isSuccess(code)) {
+        return message.success('更新成功');
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+    message.error('更新失败');
+  };
+
+  const create{{modulename | firstUpper}} = async (values: Apis.I{{modulename | firstUpper}}List) => {
+    try {
+      const { code } = await Apis.create{{modulename | firstUpper}}(values);
+
+      if (isSuccess(code)) {
+        return message.success('新建成功');
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+    message.error('新建失败');
+  };
+
+  const switch{{modulename | firstUpper}} = async (values: Apis.I{{modulename | firstUpper}}List) => {
+    try {
+      const { code } = await Apis.switch{{modulename | firstUpper}}(values);
+
+      if (isSuccess(code)) {
+        return message.success('更新成功');
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+    message.error('更新失败');
+  };
+
+  const export{{modulename | firstUpper}}List = async (values: Apis.I{{modulename | firstUpper}}List) => {
+    try {
+      await Apis.export{{modulename | firstUpper}}List(values);
+      return message.success('导出成功');
+    } catch (error) {
+      // console.log(error);
+    }
+    message.error('导出失败');
+  };
+
+  return [state, {
+    get{{modulename | firstUpper}}Lists,
+    get{{modulename | firstUpper}}Detail,
+    del{{modulename | firstUpper}},
+    update{{modulename | firstUpper}},
+    create{{modulename | firstUpper}},
+    switch{{modulename | firstUpper}},
+    export{{modulename | firstUpper}}List,
+  }];
+};
+
+export const {{modulename | firstUpper}}Context = createContext<[
+  I{{modulename | firstUpper}}State,
+  Partial<T{{modulename | firstUpper}}OutFn>
+]>([
+  {{modulename | firstUpper}}InitialSate,
+  {}
+]);

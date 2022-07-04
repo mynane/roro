@@ -1,0 +1,46 @@
+// {{modulename | firstUpper}}/model/index.ts
+import { isSuccess } from "@/utils";
+import React, { createContext, useReducer } from "react";
+
+type I{{modulename | firstUpper}}Action = {
+  [key: string]: any;
+};
+
+type T{{modulename | firstUpper}}OutFn = {};
+
+const {{modulename | firstUpper}}InitialSate = {};
+
+type I{{modulename | firstUpper}}State = typeof {{modulename | firstUpper}}InitialSate;
+
+export const use{{modulename | firstUpper}}State = (): [I{{modulename | firstUpper}}State, T{{modulename | firstUpper}}OutFn] => {
+  const [state, dispatch] = useReducer(
+    (ostate: I{{modulename | firstUpper}}State, action: I{{modulename | firstUpper}}Action) => {
+      return { ...ostate, ...action };
+    },
+    {
+      ...{{modulename | firstUpper}}InitialSate,
+    }
+  );
+
+  return [state, {}];
+};
+
+export const {{modulename | firstUpper}}Context = createContext<[
+  I{{modulename | firstUpper}}State,
+  Partial<T{{modulename | firstUpper}}OutFn>
+]>([
+  {{modulename | firstUpper}}InitialSate,
+  {}
+]);
+
+export const {{modulename | firstUpper}}Wrapper = (FnComp: any) => {
+  return (props: any) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const {{modulename}}State = use{{modulename | firstUpper}}State();
+    return (
+      <{{modulename | firstUpper}}Context.Provider value={{{modulename}}State}>
+        {FnComp(props)}
+      </{{modulename | firstUpper}}Context.Provider>
+    );
+  };
+};

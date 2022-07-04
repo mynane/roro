@@ -1,0 +1,43 @@
+import * as API from '@/services/{{modulename}}'
+import { EffectsCommandMap } from 'dva'
+import { AnyAction } from 'redux'
+
+export interface I{{modulename | firstUpper}}State {
+}
+
+export const init{{modulename | firstUpper}}State: I{{modulename | firstUpper}}State = {
+}
+
+export default {
+  namespace: '{{modulename | firstUpper}}Model',
+  state: { ...init{{modulename | firstUpper}}State },
+  reducers: {
+    setState(state: any, { payload }: any) {
+      return { ...state, ...payload }
+    },
+  },
+  effects: {
+    *init(action: AnyAction, { put, select, call }: EffectsCommandMap) {
+        // yield put({ type: 'fetchAnswerWithGoods', payload })
+    },
+    // *fetchAnswerWithGoods(action: AnyAction, { put, select, call }: EffectsCommandMap) {
+    //   const { keyword, question_b_id } = yield select((state: any) => state.autoResponse)
+    //   const { user } = yield select((state: any) => state.App)
+    //   const params = {
+    //     skip: 0,
+    //     limit: 10,
+    //     keyword,
+    //     shop_id: user.shop_id,
+    //     question_b_id,
+    //   }
+    //   const { question_b_goods_replies } = yield call(API.fetchAnswerWithGoods, params)
+    //   yield put({
+    //     type: 'setState',
+    //     payload: {
+    //       goods_replies:
+    //         question_b_goods_replies.length > 0 ? question_b_goods_replies[0] : initReplies,
+    //     },
+    //   })
+    // },
+  },
+}
