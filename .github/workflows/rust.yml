@@ -3,7 +3,7 @@ name: 'tauri build and push'
 on:
   push:
     tags:
-      - 'v.*'
+      - 'v*'
 
 jobs:
   create-release:
