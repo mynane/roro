@@ -1,7 +1,7 @@
 // Home/model/index.ts
-import React, { createContext, useEffect, useReducer } from 'react'
-import { emit, listen, UnlistenFn } from '@tauri-apps/api/event'
-import { readDir, BaseDirectory } from '@tauri-apps/api/fs'
+import { createContext, useEffect, useReducer } from 'react'
+import { listen, UnlistenFn } from '@tauri-apps/api/event'
+import { readDir } from '@tauri-apps/api/fs'
 
 type IHomeAction = {
   [key: string]: any
@@ -16,7 +16,7 @@ type IHomeState = typeof HomeInitialSate
 const unmount: UnlistenFn[] = []
 
 export const useHomeState = (): [IHomeState, THomeOutFn] => {
-  const [state, dispatch] = useReducer(
+  const [state] = useReducer(
     (ostate: IHomeState, action: IHomeAction) => {
       return { ...ostate, ...action }
     },

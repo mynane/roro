@@ -6,8 +6,7 @@ export interface ILeftContentProps {
   [key: string]: any
 }
 
-const LeftContent: React.FC<ILeftContentProps> = (props) => {
-  const {} = props
+const LeftContent: React.FC<ILeftContentProps> = () => {
   return <div className={'left-content'}>leftContent</div>
 }
 

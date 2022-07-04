@@ -6,8 +6,7 @@ export interface IRightContentProps {
   [key: string]: any
 }
 
-const RightContent: React.FC<IRightContentProps> = (props) => {
-  const {} = props
+const RightContent: React.FC<IRightContentProps> = () => {
   return <div className={'right-content'}>RightContent</div>
 }
 
