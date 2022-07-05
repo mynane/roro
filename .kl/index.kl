@@ -7,10 +7,10 @@
   }],
   "files": [{
     "file": "{{modulename | firstUpper}}/index.tsx",
-    "template": "// {{modulename | firstUpper}}/index.ts\nimport React from 'react'\nimport styles from './index.less'\n\nexport interface I{{modulename | firstUpper}}Props {\n  [key: string]: any;\n}\n\nconst {{modulename | firstUpper}}: React.FC<I{{modulename | firstUpper}}Props> = props => {\n  const { } = props;\n  return (\n    <div className={styles.{{modulename | firstUpper}}}>\n      \n    </div>\n  );\n};\n\nexport default {{modulename | firstUpper}}"
+    "template": "// {{modulename | firstUpper}}/index.ts\nimport React from 'react'\nimport styles from './index.scss'\n\nexport interface I{{modulename | firstUpper}}Props {\n  [key: string]: any;\n}\n\nconst {{modulename | firstUpper}}: React.FC<I{{modulename | firstUpper}}Props> = props => {\n  const { } = props;\n  return (\n    <div className={styles.{{modulename | firstUpper}}}>\n      \n    </div>\n  );\n};\n\nexport default {{modulename | firstUpper}}"
   }, {
-    "file": "{{modulename | firstUpper}}/index.less",
-    "template": "// {{modulename | firstUpper}}/index.less"
+    "file": "{{modulename | firstUpper}}/index.scss",
+    "template": "// {{modulename | firstUpper}}/index.scss"
   }, {
     "file": "{{modulename | firstUpper}}/widgets/index.ts",
     "template": "// {{modulename | firstUpper}}/widgets/index.ts"
@@ -35,8 +35,8 @@
     "file": "{{modulename | firstUpper}}/index.tsx",
     "templatePath": "./templates/mp4index.temp"
   }, {
-    "file": "{{modulename | firstUpper}}/index.less",
-    "template": "// {{modulename | firstUpper}}/index.less"
+    "file": "{{modulename | firstUpper}}/index.scss",
+    "template": "// {{modulename | firstUpper}}/index.scss"
   }, {
     "file": "{{modulename | firstUpper}}/widgets/index.ts",
     "template": "// {{modulename | firstUpper}}/widgets/index.ts"
@@ -59,10 +59,10 @@
   }],
   "files": [{
     "file": "{{modulename | firstUpper}}/index.tsx",
-    "template": "// {{modulename | firstUpper}}/index.ts\nimport React from 'react'\nimport styles from './index.less'\n\nexport interface I{{modulename | firstUpper}}Props {\n  [key: string]: any;\n}\n\nconst {{modulename | firstUpper}}: React.FC<I{{modulename | firstUpper}}Props> = props => {\n  const { } = props;\n  return (\n    <div className={styles.{{modulename}}}>\n      \n    </div>\n  );\n};\n\nexport default {{modulename | firstUpper}}"
+    "template": "// {{modulename | firstUpper}}/index.ts\nimport React from 'react'\nimport styles from './index.scss'\n\nexport interface I{{modulename | firstUpper}}Props {\n  [key: string]: any;\n}\n\nconst {{modulename | firstUpper}}: React.FC<I{{modulename | firstUpper}}Props> = props => {\n  const { } = props;\n  return (\n    <div className={styles.{{modulename}}}>\n      \n    </div>\n  );\n};\n\nexport default {{modulename | firstUpper}}"
   }, {
-    "file": "{{modulename | firstUpper}}/index.less",
-    "template": "// {{modulename | firstUpper}}/index.less"
+    "file": "{{modulename | firstUpper}}/index.scss",
+    "template": "// {{modulename | firstUpper}}/index.scss"
   }]
 }, {
   "label": "models",
@@ -103,8 +103,8 @@
     "file": "{{modulename | firstUpper}}/index.tsx",
     "templatePath": "./templates/index.temp"
   }, {
-    "file": "{{modulename | firstUpper}}/index.less",
-    "template": "// {{modulename | firstUpper}}/index.less"
+    "file": "{{modulename | firstUpper}}/index.scss",
+    "template": "// {{modulename | firstUpper}}/index.scss"
   }, {
     "file": "{{modulename | firstUpper}}/widgets/index.ts",
     "template": "// {{modulename | firstUpper}}/widgets/index.ts"

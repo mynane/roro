@@ -2,7 +2,7 @@
 import React from 'react'
 import { {{modulename | firstUpper}}Context, use{{modulename | firstUpper}}State } from './model';
 
-import styles from './index.less'
+import  './index.scss'
 
 export interface I{{modulename | firstUpper}}Props {
   [key: string]: any;
