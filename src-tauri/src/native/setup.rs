@@ -1,7 +1,9 @@
 use crate::core::configs::Configs;
 use tauri::App;
 use tauri::Manager;
+use tauri::Monitor;
 use tauri::Size;
+use tauri::Window;
 use tiny_http::Response;
 use tiny_http::Server;
 
@@ -26,7 +28,9 @@ pub fn setup(app: &mut App) {
     match monitor {
         Some(mo) => {
             let size = mo.size();
-            println!("{:?}", size);
+            let mots = win.primary_monitor().unwrap();
+            println!("{:?}", mots);
+            win.set_always_on_top(true).unwrap();
             // let scale_factor = mo.scale_factor();
             let position = tauri::PhysicalPosition::<i32> {
                 x: (size.width - width as u32) as i32,
