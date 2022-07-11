@@ -3,10 +3,10 @@ use std::path::{Path, PathBuf};
 use tauri::api::path::{home_dir, resource_dir};
 use tauri::{Env, PackageInfo};
 
-static APP_DIR: &str = "yoyo";
+static APP_DIR: &str = "roro";
 
 #[allow(dead_code)]
-static YOYO_CONFIG: &str = "config.yaml";
+static RORO_CONFIG: &str = "config.yaml";
 
 #[allow(dead_code)]
 static PROFILE_YAML: &str = "profiles.yaml";
@@ -51,7 +51,7 @@ pub fn app_hostory_dir() -> PathBuf {
 
 #[allow(dead_code)]
 pub fn yoyo_path() -> PathBuf {
-    app_home_dir().join(YOYO_CONFIG)
+    app_home_dir().join(RORO_CONFIG)
 }
 
 #[allow(dead_code)]

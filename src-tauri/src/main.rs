@@ -18,8 +18,8 @@ fn main() {
         .manage(states::TestState::default())
         .setup(|app| Ok(setup::setup(app)))
         .on_page_load(|window, _| {
-            let window_ = window.clone();
-            window.listen("js-event", move |event| {
+            let _window = window.clone();
+            window.listen("js-event", move |_event| {
                 // println!("got js-event with message '{:?}'", event.payload());
                 // let reply = Reply {
                 //     data: "something else".to_string(),

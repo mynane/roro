@@ -60,13 +60,18 @@
     "updater": {
       "active": false
     },
+    "macOSPrivateApi": true,
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
         "resizable": true,
         "title": "roro",
-        "width": 800
+        "transparent": true,
+        "decorations": false,
+        "visible": false,
+        "x": 0,
+        "y": 0,
+        "alwaysOnTop": true
       }
     ]
   }

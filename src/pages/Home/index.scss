@@ -1,1 +1,47 @@
 // Home/index.less
+.home {
+    position: relative;
+    height: 100vh;
+    width: 100vh;
+    &_indicator {
+        content: ' ';
+        cursor: pointer;
+        width: 10px;
+        background-color: rgba($color: #000000, $alpha: 0.3);
+        height: 20vh;
+        border-radius: 5px;
+        position: absolute;
+        top: 50%;
+        left: 2px;
+        transform: translate(0, -50%);
+        display: none;
+
+        &:hover {
+            background-color: rgba($color: #5e57f0, $alpha: 0.8);
+        }
+    }
+
+    &_content {
+        width: calc(100vw - 15px);
+        height: 100vh;
+        margin-left: 15px;
+        background-color: #333;
+        transition: all 0.5;
+    }
+
+    &_resize {
+        height: 100vh;
+        width: 1px;
+        background-color: transparent;
+
+        // &:hover {
+        //     background-color: rgba($color: #5e57f0, $alpha: 0.8);
+        // }
+    }
+
+    &:hover {
+        .home_indicator {
+            display: block;
+        }
+    }
+}

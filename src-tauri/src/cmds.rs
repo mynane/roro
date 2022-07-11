@@ -35,7 +35,7 @@ pub fn say_hello(
 }
 
 #[tauri::command]
-pub async fn show_dialog(window: Window) -> Result<(), String> {
+pub async fn show_dialog(_window: Window) -> Result<(), String> {
     // tauri::api::dialog::ask(Some(&window), "Tauri", "Is Tauri awesome?", |answer| {
     //     // do something with `answer`
     //     println!("nihoa");

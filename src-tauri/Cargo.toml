@@ -28,7 +28,7 @@ serde_yaml = "0.8"
 tiny_http = "0.11"
 rand = "0.8.4"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.0.0-rc.6", features = ["api-all", "global-shortcut", "http-multipart", "icon-ico", "icon-png", "reqwest-client", "system-tray", "gtk-tray"] }
+tauri = { version = "1.0.0-rc.6", features = ["api-all", "global-shortcut", "gtk-tray", "http-multipart", "icon-ico", "icon-png", "macos-private-api", "reqwest-client", "system-tray"] }
 
 [features]
 # by default Tauri runs in production mode

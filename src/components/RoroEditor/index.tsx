@@ -1,4 +1,3 @@
-import ExampleTheme from './themes/ExampleTheme'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
@@ -6,7 +5,7 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
 // import TreeViewPlugin from './plugins/TreeViewPlugin'
-import ToolbarPlugin from './plugins/ToolbarPlugin'
+import { $getRoot, $getSelection, EditorState, LexicalEditor } from 'lexical'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table'
 import { ListItemNode, ListNode } from '@lexical/list'
@@ -20,10 +19,11 @@ import { TRANSFORMERS } from '@lexical/markdown'
 import ListMaxIndentLevelPlugin from './plugins/ListMaxIndentLevelPlugin'
 import CodeHighlightPlugin from './plugins/CodeHighlightPlugin'
 import AutoLinkPlugin from './plugins/AutoLinkPlugin'
+import ToolbarPlugin from './plugins/ToolbarPlugin'
 
-import './index.scss'
-import { $getRoot, $getSelection, EditorState, LexicalEditor } from 'lexical'
 import OnValueChangePlugin from './plugins/OnValueChangePlugin'
+import ExampleTheme from './themes/ExampleTheme'
+import './index.scss'
 
 function Placeholder() {
   return <div className="editor-placeholder">Enter some rich text...</div>
