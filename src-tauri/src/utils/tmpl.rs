@@ -4,7 +4,7 @@
 pub const CLASH_CONFIG: &[u8] = br#"# Default Config For Clash Core
 
 width: 800
-mode: open
+mode: false
 "#;
 
 /// template for `profiles.yaml`

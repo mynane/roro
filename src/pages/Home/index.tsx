@@ -16,6 +16,7 @@ import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import MDEditor from '../../components/MDEditor'
 import { HomeContext, useHomeState } from './model'
 import './index.scss'
+import { fold, isfold, unfold } from '../../services/cmds'
 
 export interface IHomeProps {
   [key: string]: any
@@ -58,7 +59,17 @@ const Home: React.FC<IHomeProps> = (props) => {
               </InputRightAddon>
             </InputGroup>
           </div>
-          <div className="home_indicator"></div>
+          <div
+            className="home_indicator"
+            onClick={async () => {
+              const result: boolean = await isfold()
+              if (result) {
+                await unfold()
+              } else {
+                await fold()
+              }
+            }}
+          ></div>
           <div className="home_content">
             {new Array(100).fill(1).map((i, index) => {
               return <MDEditor key={index} />

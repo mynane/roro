@@ -2,12 +2,12 @@
 .home {
     position: relative;
     height: 100vh;
-    width: 100vh;
+    // width: 100vw;
     &_indicator {
         content: ' ';
         cursor: pointer;
         width: 10px;
-        background-color: rgba($color: #000000, $alpha: 0.3);
+        background-color: rgba($color: #5e57f0, $alpha: 0.6);
         height: 20vh;
         border-radius: 5px;
         position: absolute;
@@ -26,7 +26,7 @@
         height: 100vh;
         margin-left: 15px;
         // background-color: #333;
-        transition: all 0.5;
+        // transition: all 0.5;
         overflow-y: auto;
         padding-top: 80px;
     }
@@ -60,5 +60,14 @@
 
     .chakra-input__left-addon {
         padding: 0;
+    }
+}
+
+@media screen and (max-width: 100px) {
+    .search {
+        display: none;
+    }
+    .home_content {
+        display: none;
     }
 }

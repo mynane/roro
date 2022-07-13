@@ -2,6 +2,8 @@ use std::sync::{Arc, Mutex};
 
 use serde::{Deserialize, Serialize};
 
+use crate::core::configs::Configs;
+
 #[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct Caches {
     pub name: String,
@@ -19,3 +21,6 @@ pub struct CachesState(pub Arc<Mutex<Caches>>);
 
 #[derive(Default, Debug)]
 pub struct TestState(pub Arc<Mutex<Caches>>);
+
+#[derive(Debug, Default)]
+pub struct ConfigsState(pub Arc<Mutex<Configs>>);

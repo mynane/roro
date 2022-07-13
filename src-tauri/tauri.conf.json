@@ -66,9 +66,10 @@
         "fullscreen": false,
         "resizable": true,
         "title": "roro",
-        "transparent": true,
         "decorations": false,
+        "transparent": true,
         "visible": false,
+        "minWidth": 0,
         "x": 0,
         "y": 0,
         "alwaysOnTop": true

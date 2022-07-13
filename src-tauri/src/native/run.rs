@@ -4,6 +4,7 @@ use tauri::RunEvent;
 use tauri::WindowEvent;
 
 use crate::core::configs::Configs;
+use crate::states;
 
 pub fn run_handler(app: &AppHandle, event: RunEvent) {
     match event {
@@ -14,9 +15,15 @@ pub fn run_handler(app: &AppHandle, event: RunEvent) {
             event: WindowEvent::Resized(size),
             ..
         } => {
-            let mut config = Configs::read_file();
-            println!("{:?}", size);
-            config.set_width(size.width).unwrap();
+            let configs_state = app.state::<states::ConfigsState>();
+            let mut configs = configs_state.0.lock().unwrap();
+            configs.async_file();
+
+            let mode = configs.mode.unwrap_or_default();
+
+            if !mode {
+                configs.set_width(size.width).unwrap();
+            }
         }
         // RunEvent::Ready => todo!(),
         // RunEvent::Resumed => todo!(),

@@ -16,6 +16,7 @@ fn main() {
     let mut app = tauri::Builder::default()
         .manage(states::CachesState::default())
         .manage(states::TestState::default())
+        .manage(states::ConfigsState::default())
         .setup(|app| Ok(setup::setup(app)))
         .on_page_load(|window, _| {
             let _window = window.clone();
@@ -34,7 +35,13 @@ fn main() {
         .on_menu_event(menu::on_menu_event)
         .system_tray(tray::get_tray())
         .on_system_tray_event(tray::on_system_tray_event)
-        .invoke_handler(tauri::generate_handler![cmds::say_hello, cmds::show_dialog])
+        .invoke_handler(tauri::generate_handler![
+            cmds::say_hello,
+            cmds::show_dialog,
+            cmds::fold,
+            cmds::unfold,
+            cmds::isfold,
+        ])
         .build(tauri::generate_context!())
         .expect("error while running tauri application");
 

@@ -1,9 +1,12 @@
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
-use tauri::{State, Window};
+use tauri::{Size, State, Window};
 
-use crate::states::{CachesState, TestState};
+use crate::{
+    states::{CachesState, ConfigsState, TestState},
+    utils::size::{change_width, init_position},
+};
 // use crate::wrap_err;
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize)]
@@ -83,4 +86,47 @@ pub async fn show_dialog(_window: Window) -> Result<(), String> {
     //     });
 
     Ok(())
+}
+
+#[tauri::command]
+pub fn unfold(window: Window, configs_state: State<'_, ConfigsState>) -> Result<(), String> {
+    let mut configs = configs_state.0.lock().unwrap();
+    configs.async_file().unwrap();
+    configs.set_mode(false).unwrap();
+    window.set_resizable(true).unwrap();
+
+    let width = match configs.width {
+        Some(width) => width,
+        None => 400.0 as u32,
+    };
+
+    println!("{}", width);
+
+    change_width(window, width).unwrap();
+
+    Ok(())
+}
+
+#[tauri::command]
+pub fn fold(window: Window, configs_state: State<'_, ConfigsState>) -> Result<(), String> {
+    let mut configs = configs_state.0.lock().unwrap();
+    configs.async_file().unwrap();
+    configs.set_mode(true).unwrap();
+    window.set_resizable(false).unwrap();
+
+    println!("{:?}", 12);
+
+    change_width(window, 30).unwrap();
+
+    Ok(())
+}
+
+#[tauri::command]
+pub fn isfold(_window: Window, configs_state: State<'_, ConfigsState>) -> Result<bool, String> {
+    let mut configs = configs_state.0.lock().unwrap();
+    configs.async_file().unwrap();
+
+    let mode = configs.mode.unwrap_or_default();
+
+    Ok(mode)
 }
