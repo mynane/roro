@@ -25,23 +25,40 @@
         width: calc(100vw - 15px);
         height: 100vh;
         margin-left: 15px;
-        background-color: #333;
+        // background-color: #333;
         transition: all 0.5;
+        overflow-y: auto;
+        padding-top: 80px;
     }
 
     &_resize {
         height: 100vh;
         width: 1px;
         background-color: transparent;
-
-        // &:hover {
-        //     background-color: rgba($color: #5e57f0, $alpha: 0.8);
-        // }
     }
 
     &:hover {
         .home_indicator {
             display: block;
         }
+    }
+}
+
+.search {
+    background-color: white;
+    position: fixed;
+    border-radius: 6px;
+    margin: 20px;
+    margin-right: 10px;
+    margin-left: 24px;
+    z-index: 100;
+    display: flex;
+    width: -webkit-fill-available;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+
+    .chakra-input__left-addon {
+        padding: 0;
     }
 }
