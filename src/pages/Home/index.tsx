@@ -1,24 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // Home/index.ts
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   ChakraProvider,
+  IconButton,
   Input,
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
   Menu,
   MenuButton,
-  MenuItem,
+  MenuItemOption,
   MenuList,
+  MenuOptionGroup,
   Textarea,
 } from '@chakra-ui/react'
-import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
-import MDEditor from '../../components/MDEditor'
+import { AddIcon, ChevronDownIcon, DeleteIcon } from '@chakra-ui/icons'
 import { HomeContext, useHomeState } from './model'
-import './index.scss'
 import {
   createPost,
+  deletePost,
   fold,
   getCatalogues,
   getItemsByCuid,
@@ -27,6 +28,7 @@ import {
   unfold,
   updatePost,
 } from '../../services/cmds'
+import './index.scss'
 
 export interface IHomeProps {
   [key: string]: any
@@ -53,15 +55,22 @@ const Home: React.FC<IHomeProps> = (props) => {
     try {
       const list: any = await getCatalogues()
       setCatas(list)
-      if (list.current) {
-        getPostsList()
-      }
     } catch (error) {}
   }
 
   useEffect(() => {
     getCataloguesLists()
   }, [])
+
+  useEffect(() => {
+    if (catas.current) {
+      getPostsList()
+    }
+  }, [catas.current])
+
+  const current = useMemo(() => {
+    return catas?.items?.filter((item: any) => item.uid === catas.current)?.[0]
+  }, [catas])
 
   return (
     <ChakraProvider>
@@ -81,22 +90,22 @@ const Home: React.FC<IHomeProps> = (props) => {
                     _expanded={{ bg: 'blue.400' }}
                     _focus={{ boxShadow: 'outline' }}
                   >
-                    File <ChevronDownIcon />
+                    {current?.name} <ChevronDownIcon />
                   </MenuButton>
                   <MenuList>
-                    {catas.items.map((cata: any) => {
-                      return (
-                        <MenuItem
-                          key={cata.uid}
-                          onClick={async () => {
-                            await putCurrent(cata.uid)
-                            await getCataloguesLists()
-                          }}
-                        >
-                          {cata.name}
-                        </MenuItem>
-                      )
-                    })}
+                    <MenuOptionGroup
+                      value={catas.current}
+                      onChange={async (uid) => {
+                        await putCurrent(uid as string)
+                        await getCataloguesLists()
+                      }}
+                      title="目录"
+                      type="radio"
+                    >
+                      {catas.items.map((cata: any) => {
+                        return <MenuItemOption value={cata.uid}>{cata.name}</MenuItemOption>
+                      })}
+                    </MenuOptionGroup>
                   </MenuList>
                 </Menu>
               </InputLeftAddon>
@@ -105,7 +114,6 @@ const Home: React.FC<IHomeProps> = (props) => {
                 <AddIcon
                   onClick={async () => {
                     await createPost({ cuid: catas.current })
-                    console.log(catas.cuid)
                     await getPostsList()
                   }}
                 />
@@ -140,12 +148,31 @@ const Home: React.FC<IHomeProps> = (props) => {
               return (
                 <div className="home_editor">
                   <Textarea
+                    autoFocus
+                    placeholder="请输入"
+                    border="none"
+                    borderBottom="1px"
+                    key={i.uid}
                     defaultValue={i.content}
                     onBlur={async (e) => {
                       await updatePost(i.uid, { content: e.target.value.trim() })
                       await getPostsList()
                     }}
                   ></Textarea>
+                  <div className="home_editor_toolbar">
+                    <div></div>
+                    <div>
+                      <IconButton
+                        size="sm"
+                        aria-label="删除"
+                        icon={<DeleteIcon />}
+                        onClick={async () => {
+                          await deletePost(i.uid)
+                          await getPostsList()
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
                 // <MDEditor
                 //   key={i.uid}
