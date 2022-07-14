@@ -45,22 +45,19 @@ struct Payload {
 pub fn on_menu_event(event: WindowMenuEvent) {
     match event.menu_item_id() {
         "open-folder" => {
-            FileDialogBuilder::new().pick_folder(move |folder_path| {
-                println!("{:?}", folder_path);
-                match folder_path {
-                    Some(path) => {
-                        let main_window = event.window().get_window("main").unwrap();
-                        main_window
-                            .emit("on-target-change", Payload { message: path })
-                            .unwrap();
-                    }
-                    None => {}
+            FileDialogBuilder::new().pick_folder(move |folder_path| match folder_path {
+                Some(path) => {
+                    let main_window = event.window().get_window("main").unwrap();
+                    main_window
+                        .emit("on-target-change", Payload { message: path })
+                        .unwrap();
                 }
+                None => {}
             });
         }
         id => {
             // do something with other events
-            println!("got menu event: {}", id);
+            // println!("got menu event: {}", id);
         }
     }
 }

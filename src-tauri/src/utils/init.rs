@@ -4,11 +4,13 @@ use super::{dirs, tmpl};
 use std::{fs, io::Write, path::PathBuf};
 
 /// Initialize all the files from resources
-fn init_config(app_dir: &PathBuf) -> std::io::Result<()> {
+fn init_config(app_dir: &PathBuf, workspace_dir: &PathBuf) -> std::io::Result<()> {
     // target path
     let clash_path = app_dir.join("config.yaml");
     let verge_path = app_dir.join("verge.yaml");
     let profile_path = app_dir.join("profiles.yaml");
+    let catalogues_path = workspace_dir.join("catalogues.yaml");
+    let posts_path = workspace_dir.join("posts.yaml");
 
     if !clash_path.exists() {
         fs::File::create(clash_path)?.write(tmpl::CLASH_CONFIG)?;
@@ -19,6 +21,12 @@ fn init_config(app_dir: &PathBuf) -> std::io::Result<()> {
     if !profile_path.exists() {
         fs::File::create(profile_path)?.write(tmpl::PROFILES_CONFIG)?;
     }
+    if !catalogues_path.exists() {
+        fs::File::create(catalogues_path)?.write(tmpl::CATALOGUE_CONFIG)?;
+    }
+    if !posts_path.exists() {
+        fs::File::create(posts_path)?.write(tmpl::POSTS_CONFIG)?;
+    }
     Ok(())
 }
 
@@ -28,6 +36,7 @@ pub fn init_app(_package_info: &PackageInfo) {
     let app_dir = dirs::app_home_dir();
     let log_dir = dirs::app_logs_dir();
     let profiles_dir = dirs::app_profiles_dir();
+    let workspace_dir = dirs::app_workspace_dir();
 
     // let res_dir = dirs::app_resources_dir(package_info);
 
@@ -41,8 +50,12 @@ pub fn init_app(_package_info: &PackageInfo) {
         fs::create_dir_all(&profiles_dir).unwrap();
     }
 
+    if !workspace_dir.exists() {
+        fs::create_dir_all(&workspace_dir).unwrap();
+    }
+
     // init_log(&log_dir);
-    if let Err(err) = init_config(&app_dir) {
+    if let Err(err) = init_config(&app_dir, &workspace_dir) {
         log::error!("{err}");
     }
 

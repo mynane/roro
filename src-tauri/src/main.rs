@@ -17,6 +17,8 @@ fn main() {
         .manage(states::CachesState::default())
         .manage(states::TestState::default())
         .manage(states::ConfigsState::default())
+        .manage(states::CataloguesState::default())
+        .manage(states::PostsState::default())
         .setup(|app| Ok(setup::setup(app)))
         .on_page_load(|window, _| {
             let _window = window.clone();
@@ -41,6 +43,19 @@ fn main() {
             cmds::fold,
             cmds::unfold,
             cmds::isfold,
+            cmds::get_catalogues,
+            cmds::sync_catalogues,
+            cmds::create_catalogue,
+            cmds::update_catalogue,
+            cmds::delete_catalogue,
+            cmds::put_current,
+            cmds::get_posts,
+            cmds::sync_posts,
+            cmds::create_post,
+            cmds::update_post,
+            cmds::delete_post,
+            cmds::delete_items_by_cuid,
+            cmds::get_items_by_cuid
         ])
         .build(tauri::generate_context!())
         .expect("error while running tauri application");

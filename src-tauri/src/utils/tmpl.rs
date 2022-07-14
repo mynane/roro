@@ -7,6 +7,19 @@ width: 800
 mode: false
 "#;
 
+/// template for `catalogue.yaml`
+pub const CATALOGUE_CONFIG: &[u8] = br#"# Default Catalogue for roro
+
+current: ~
+items: ~
+"#;
+
+/// template for `posts.yaml`
+pub const POSTS_CONFIG: &[u8] = b"# Default posts for roro
+
+items: ~
+";
+
 /// template for `profiles.yaml`
 pub const PROFILES_CONFIG: &[u8] = b"# Profiles Config for Clash Verge
 

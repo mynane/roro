@@ -16,6 +16,10 @@ static PROFILE_TEMP: &str = "yoyo-runtime.yaml";
 
 static HISTORY_TEMP: &str = "history.yaml";
 
+static CATALOGUE_YAML: &str = "catalogues.yaml";
+
+static POST_YAML: &str = "posts.yaml";
+
 /// get the yoyo app home dir
 pub fn app_home_dir() -> PathBuf {
     home_dir()
@@ -49,6 +53,11 @@ pub fn app_hostory_dir() -> PathBuf {
     app_home_dir().join("histoy")
 }
 
+/// workspace dir
+pub fn app_workspace_dir() -> PathBuf {
+    app_home_dir().join("workspace")
+}
+
 #[allow(dead_code)]
 pub fn yoyo_path() -> PathBuf {
     app_home_dir().join(RORO_CONFIG)
@@ -67,4 +76,14 @@ pub fn profiles_temp_path() -> PathBuf {
 #[allow(dead_code)]
 pub fn history_path() -> PathBuf {
     app_hostory_dir().join(HISTORY_TEMP)
+}
+
+#[allow(dead_code)]
+pub fn catalogue_path() -> PathBuf {
+    app_workspace_dir().join(CATALOGUE_YAML)
+}
+
+#[allow(dead_code)]
+pub fn post_path() -> PathBuf {
+    app_workspace_dir().join(POST_YAML)
 }

@@ -40,7 +40,6 @@ pub fn run_handler(app: &AppHandle, event: RunEvent) {
                     }
                     None => {}
                 }
-                println!("{:?}", data);
             });
         }
         _ => {}

@@ -33,7 +33,6 @@ pub fn init_position(win: Window, wid: u32, mode: bool) -> Result<()> {
         }
         None => {}
     }
-    println!("1");
     Ok(())
 }
 
@@ -41,14 +40,11 @@ pub fn change_width(win: Window, width: u32) -> Result<()> {
     let monitor = win.primary_monitor().unwrap();
     match monitor {
         Some(mo) => {
-            println!("{:?}", mo);
             let size = mo.size();
             let position = tauri::PhysicalPosition::<i32> {
                 x: (size.width - width as u32) as i32,
                 y: 0,
             };
-
-            println!("{:?} {} {}", position, size.width, width);
 
             win.set_size(Size::Physical(tauri::PhysicalSize {
                 width: (width as f64) as u32,
@@ -61,6 +57,5 @@ pub fn change_width(win: Window, width: u32) -> Result<()> {
         }
         None => {}
     }
-    println!("2");
     Ok(())
 }

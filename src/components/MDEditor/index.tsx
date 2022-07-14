@@ -37,8 +37,7 @@ const converter = new Showdown.Converter({
   tasklists: true,
 })
 
-export default function MDEditor() {
-  const [value, setValue] = React.useState('**Hello world!!!**')
+export default function MDEditor({ value, onChange }: any) {
   const [selectedTab, setSelectedTab] = React.useState<'write' | 'preview'>('write')
 
   const save: SaveImageHandler = async function* () {
@@ -68,7 +67,7 @@ export default function MDEditor() {
       <ReactMde
         toolbarCommands={[]}
         value={value}
-        onChange={setValue}
+        onChange={onChange}
         selectedTab={selectedTab}
         onTabChange={setSelectedTab}
         generateMarkdownPreview={(markdown) => Promise.resolve(converter.makeHtml(markdown))}

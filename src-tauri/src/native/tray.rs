@@ -31,7 +31,7 @@ pub fn on_system_tray_event(app: &AppHandle, event: SystemTrayEvent) {
         }
         SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
             "open_window" => {
-                println!("shijinhua");
+                // println!("shijinhua");
             }
             "quit" => {
                 app.exit(0);
