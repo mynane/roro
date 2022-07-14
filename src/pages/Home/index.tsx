@@ -11,6 +11,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Textarea,
 } from '@chakra-ui/react'
 import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import MDEditor from '../../components/MDEditor'
@@ -137,15 +138,24 @@ const Home: React.FC<IHomeProps> = (props) => {
           <div className="home_content">
             {lists.map((i: any) => {
               return (
-                <MDEditor
-                  key={i.uid}
-                  value={i.content}
-                  onChange={async (value: any) => {
-                    await updatePost(i.uid, { content: value })
-                    await getPostsList()
-                    console.log(value)
-                  }}
-                />
+                <div className="home_editor">
+                  <Textarea
+                    defaultValue={i.content}
+                    onBlur={async (e) => {
+                      await updatePost(i.uid, { content: e.target.value.trim() })
+                      await getPostsList()
+                    }}
+                  ></Textarea>
+                </div>
+                // <MDEditor
+                //   key={i.uid}
+                //   value={i.content}
+                //   onChange={async (value: any) => {
+                //     await updatePost(i.uid, { content: value })
+                //     await getPostsList()
+                //     console.log(value)
+                //   }}
+                // />
               )
             })}
           </div>
