@@ -16,6 +16,11 @@ import {
   Textarea,
 } from '@chakra-ui/react'
 import { AddIcon, ChevronDownIcon, DeleteIcon } from '@chakra-ui/icons'
+import {
+  isPermissionGranted,
+  requestPermission,
+  sendNotification,
+} from '@tauri-apps/api/notification'
 import { HomeContext, useHomeState } from './model'
 import {
   createPost,
@@ -60,6 +65,30 @@ const Home: React.FC<IHomeProps> = (props) => {
 
   useEffect(() => {
     getCataloguesLists()
+    // ;(async () => {
+    //   await register('CommandOrControl+Shift+C', async () => {
+    //     const result: boolean = await isfold()
+    //     if (result) {
+    //       await unfold()
+    //     } else {
+    //       await fold()
+    //     }
+    //   })
+    //   await register('CommandOrControl+Shift+M', async () => {
+    //     const result: boolean = await isfold()
+    //     if (result) {
+    //       await unfold()
+    //     }
+    //     console.log(catas)
+    //     await createPost({ cuid: catas.current })
+    //     await getPostsList()
+    //   })
+    // })()
+
+    // return () => {
+    //   unregister('CommandOrControl+Shift+C')
+    //   unregister('CommandOrControl+Shift+M')
+    // }
   }, [])
 
   useEffect(() => {
@@ -113,6 +142,20 @@ const Home: React.FC<IHomeProps> = (props) => {
               <InputRightAddon>
                 <AddIcon
                   onClick={async () => {
+                    let permissionGranted = await isPermissionGranted()
+
+                    if (!permissionGranted) {
+                      const permission = await requestPermission()
+                      permissionGranted = permission === 'granted'
+                    }
+
+                    if (permissionGranted) {
+                      sendNotification({ title: 'TAURI', body: 'Tauri is awesome!' })
+                    }
+                    console.log(
+                      '🚀 ~ file: index.tsx ~ line 143 ~ onClick={ ~ permission',
+                      permissionGranted
+                    )
                     await createPost({ cuid: catas.current })
                     await getPostsList()
                   }}

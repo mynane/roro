@@ -1,13 +1,14 @@
 use crate::states;
 use crate::utils::init;
 use crate::utils::size::init_position;
-use anyhow::Result;
 use tauri::App;
+use tauri::GlobalShortcutManager;
 use tauri::Manager;
 
 /// app setup
 pub fn setup(app: &mut App) {
     let win = app.get_window("main").unwrap();
+
     #[cfg(debug_assertions)]
     win.open_devtools();
 
