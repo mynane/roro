@@ -190,7 +190,7 @@ const Home: React.FC<IHomeProps> = (props) => {
               return (
                 <MDEditor
                   key={i.uid}
-                  defaultProps={i.content}
+                  defaultValue={i.content}
                   onBlur={async (e: any) => {
                     await updatePost(i.uid, { content: e.target.value.trim() })
                     await getPostsList()

@@ -164,11 +164,11 @@ const MDEditor: React.FC<any> = (props) => {
             variant="unstyled"
             onBlur={(e) => {
               setFocused(false)
-              props?.onBlur(e)
+              props?.onBlur && props?.onBlur(e)
             }}
             onFocus={(e) => {
               setFocused(true)
-              props?.onFocus(e)
+              props?.onFocus && props?.onFocus(e)
             }}
           />
           <div className="mdEditor-footer">
