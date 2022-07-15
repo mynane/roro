@@ -2,14 +2,22 @@ import {
   Box,
   ChakraProvider,
   Flex,
+  HStack,
   IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalOverlay,
   Spacer,
   Textarea,
+  useDisclosure,
 } from '@chakra-ui/react'
+import ResizeTextarea from 'react-textarea-autosize'
 import * as React from 'react'
 import classNames from 'classnames'
 import {
@@ -42,8 +50,11 @@ import {
 } from 'react-icons/fa'
 import { BiCodeCurly } from 'react-icons/bi'
 import { MdDeleteOutline } from 'react-icons/md'
+import { FiSettings } from 'react-icons/fi'
+import { IoMdColorFilter } from 'react-icons/io'
 
 import { HamburgerIcon } from '@chakra-ui/icons'
+import { SketchPicker } from 'react-color'
 import './index.scss'
 
 const commandMapConfigs = [
@@ -143,7 +154,9 @@ const commandMap = () => {
 }
 
 const MDEditor: React.FC<any> = (props) => {
+  const { backgroundColor = '#fff' } = props
   const [focused, setFocused] = React.useState(false)
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const { ref, commandController } = useTextAreaMarkdownEditor({
     commandMap: commandMap(),
   })
@@ -153,11 +166,19 @@ const MDEditor: React.FC<any> = (props) => {
       className={classNames('mdEditor', {
         'mdEditor-focused': focused,
       })}
+      style={{ backgroundColor }}
     >
       <ChakraProvider>
         <Box p={3} pb={0}>
           <Textarea
             ref={ref}
+            minH="unset"
+            overflow="auto"
+            w="100%"
+            resize="none"
+            minRows={3}
+            maxRows={20}
+            as={ResizeTextarea}
             placeholder="请输入"
             {...props}
             fontFamily={'monospace'}
@@ -173,7 +194,7 @@ const MDEditor: React.FC<any> = (props) => {
           />
           <div className="mdEditor-footer">
             <Flex minWidth="max-content" alignItems="center" gap="2">
-              <Box p="2">
+              <HStack spacing="10px">
                 <Menu>
                   <MenuButton>
                     <IconButton
@@ -200,7 +221,27 @@ const MDEditor: React.FC<any> = (props) => {
                     })}
                   </MenuList>
                 </Menu>
-              </Box>
+                <Menu>
+                  <MenuButton>
+                    <IconButton
+                      variant="outline"
+                      aria-label="Options"
+                      icon={<FiSettings />}
+                      size="sm"
+                    />
+                  </MenuButton>
+                  <MenuList border={'1px solid #eee'}>
+                    <MenuItem
+                      icon={<IoMdColorFilter />}
+                      onClick={async () => {
+                        onOpen()
+                      }}
+                    >
+                      背景色
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </HStack>
               <Spacer />
               <IconButton
                 size="sm"
@@ -213,6 +254,22 @@ const MDEditor: React.FC<any> = (props) => {
           </div>
         </Box>
       </ChakraProvider>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent width={'initial'}>
+          <ModalCloseButton />
+          <ModalBody width={'initial'} padding={0}>
+            <SketchPicker
+              disableAlpha
+              color={backgroundColor}
+              onChange={(color) => {
+                props?.onBgColorChange(color.hex)
+              }}
+            />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </div>
   )
 }

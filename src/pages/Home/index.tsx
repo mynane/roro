@@ -185,18 +185,23 @@ const Home: React.FC<IHomeProps> = (props) => {
               }
             }}
           ></div>
-          <div className="home_content">
+          <div className="home_content" key={catas.current}>
             {lists.map((i: any) => {
               return (
                 <MDEditor
                   key={i.uid}
                   defaultValue={i.content}
+                  backgroundColor={i.background_color}
                   onBlur={async (e: any) => {
                     await updatePost(i.uid, { content: e.target.value.trim() })
                     await getPostsList()
                   }}
                   onRemove={async () => {
                     await deletePost(i.uid)
+                    await getPostsList()
+                  }}
+                  onBgColorChange={async (color: string) => {
+                    await updatePost(i.uid, { ...i, background_color: color })
                     await getPostsList()
                   }}
                 />

@@ -19,6 +19,10 @@ pub struct PostItem {
     /// post name
     #[serde(skip_serializing_if = "Option::is_none")]
     pub content: Option<String>,
+
+    /// post card background color
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub background_color: Option<String>,
 }
 
 impl Default for PostItem {
@@ -27,6 +31,7 @@ impl Default for PostItem {
             uid: None,
             cuid: None,
             content: None,
+            background_color: None,
         }
     }
 }
@@ -128,6 +133,7 @@ impl Posts {
         for mut each in items.iter_mut() {
             if each.uid == Some(uid.clone()) {
                 patch!(each, item, content);
+                patch!(each, item, background_color);
 
                 self.items = Some(items);
                 return self.save_file();
