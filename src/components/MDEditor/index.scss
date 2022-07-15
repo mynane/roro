@@ -1,5 +1,28 @@
 // MDEditor/index.scss
-.container {
-    margin: 10px;
+.mdEditor {
+  border: 1px solid #eee;
+  border-radius: 4px;
+  .chakra-textarea {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    outline: none;
   }
+
+  &:hover, &-focused {
+    border: 1px solid rgb(111, 30, 182);
+    .mdEditor-footer {
+      border-color: rgb(111, 30, 182);
+    }
+  }
+
+  background-color: #fff;
+
+  margin-bottom: 10px;
+
+}
+.mdEditor-footer {
+  border-top: none;
+  border-top: 1px solid #eee;
+  padding: 6px 0;
+}
   

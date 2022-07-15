@@ -3,7 +3,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import {
   ChakraProvider,
-  IconButton,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -13,9 +12,8 @@ import {
   MenuItemOption,
   MenuList,
   MenuOptionGroup,
-  Textarea,
 } from '@chakra-ui/react'
-import { AddIcon, ChevronDownIcon, DeleteIcon } from '@chakra-ui/icons'
+import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import {
   isPermissionGranted,
   requestPermission,
@@ -34,6 +32,7 @@ import {
   updatePost,
 } from '../../services/cmds'
 import './index.scss'
+import MDEditor from '../../components/MDEditor'
 
 export interface IHomeProps {
   [key: string]: any
@@ -189,43 +188,18 @@ const Home: React.FC<IHomeProps> = (props) => {
           <div className="home_content">
             {lists.map((i: any) => {
               return (
-                <div className="home_editor">
-                  <Textarea
-                    autoFocus
-                    placeholder="请输入"
-                    border="none"
-                    borderBottom="1px"
-                    key={i.uid}
-                    defaultValue={i.content}
-                    onBlur={async (e) => {
-                      await updatePost(i.uid, { content: e.target.value.trim() })
-                      await getPostsList()
-                    }}
-                  ></Textarea>
-                  <div className="home_editor_toolbar">
-                    <div></div>
-                    <div>
-                      <IconButton
-                        size="sm"
-                        aria-label="删除"
-                        icon={<DeleteIcon />}
-                        onClick={async () => {
-                          await deletePost(i.uid)
-                          await getPostsList()
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                // <MDEditor
-                //   key={i.uid}
-                //   value={i.content}
-                //   onChange={async (value: any) => {
-                //     await updatePost(i.uid, { content: value })
-                //     await getPostsList()
-                //     console.log(value)
-                //   }}
-                // />
+                <MDEditor
+                  key={i.uid}
+                  defaultProps={i.content}
+                  onBlur={async (e: any) => {
+                    await updatePost(i.uid, { content: e.target.value.trim() })
+                    await getPostsList()
+                  }}
+                  onRemove={async () => {
+                    await deletePost(i.uid)
+                    await getPostsList()
+                  }}
+                />
               )
             })}
           </div>
