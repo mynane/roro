@@ -7,33 +7,61 @@ use tauri::{
 
 /// get menu
 pub fn get_menu() -> Menu {
-    #[allow(unused_mut)]
-    let mut disable_item =
-        CustomMenuItem::new("disable-menu", "Disable menu").accelerator("CmdOrControl+D");
-    #[allow(unused_mut)]
-    let mut test_item = CustomMenuItem::new("test", "Test").accelerator("CmdOrControl+T");
-    #[cfg(target_os = "macos")]
-    {
-        disable_item = disable_item.native_image(tauri::NativeImage::MenuOnState);
-        test_item = test_item.native_image(tauri::NativeImage::Add);
-    }
+    // #[allow(unused_mut)]
+    // let mut disable_item =
+    //     CustomMenuItem::new("disable-menu", "Disable menu").accelerator("CmdOrControl+D");
+    // #[allow(unused_mut)]
+    // let mut test_item = CustomMenuItem::new("test", "Test").accelerator("CmdOrControl+T");
+    // #[cfg(target_os = "macos")]
+    // {
+    //     disable_item = disable_item.native_image(tauri::NativeImage::MenuOnState);
+    //     test_item = test_item.native_image(tauri::NativeImage::Add);
+    // }
+    let about_menu = Submenu::new(
+        "App",
+        Menu::new()
+            .add_native_item(MenuItem::Hide)
+            .add_native_item(MenuItem::HideOthers)
+            .add_native_item(MenuItem::ShowAll)
+            .add_native_item(MenuItem::Separator)
+            .add_native_item(MenuItem::Quit),
+    );
 
-    // create a submenu
-    let my_sub_menu = Menu::with_items([disable_item.into()]);
+    let edit_menu = Submenu::new(
+        "Edit",
+        Menu::new()
+            .add_native_item(MenuItem::Undo)
+            .add_native_item(MenuItem::Redo)
+            .add_native_item(MenuItem::Separator)
+            .add_native_item(MenuItem::Cut)
+            .add_native_item(MenuItem::Copy)
+            .add_native_item(MenuItem::Paste)
+            .add_native_item(MenuItem::SelectAll),
+    );
 
-    let my_app_menu = Menu::new()
-        .add_native_item(MenuItem::Copy)
-        .add_submenu(Submenu::new("Sub menu", my_sub_menu));
+    let view_menu = Submenu::new(
+        "View",
+        Menu::new().add_native_item(MenuItem::EnterFullScreen),
+    );
 
-    let test_menu = Menu::new()
-        .add_item(CustomMenuItem::new("open-folder", "打开文件夹"))
-        .add_native_item(MenuItem::Separator)
-        .add_item(test_item);
+    let window_menu = Submenu::new(
+        "Window",
+        Menu::new()
+            .add_native_item(MenuItem::Minimize)
+            .add_native_item(MenuItem::Zoom),
+    );
 
-    // add all our childs to the menu (order is how they'll appear)
+    let help_menu = Submenu::new(
+        "Help",
+        Menu::new().add_item(CustomMenuItem::new("Learn More", "Learn More")),
+    );
+
     Menu::new()
-        .add_submenu(Submenu::new("My app", my_app_menu))
-        .add_submenu(Submenu::new("文件", test_menu))
+        .add_submenu(about_menu)
+        .add_submenu(edit_menu)
+        .add_submenu(view_menu)
+        .add_submenu(window_menu)
+        .add_submenu(help_menu)
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]

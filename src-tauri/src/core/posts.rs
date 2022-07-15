@@ -1,7 +1,7 @@
 use std::{fs, io::Write};
 
 use crate::{
-    utils::{config, dirs, help},
+    utils::{config, dirs, help, placeholder_text::get_placeholder},
     wrap_err,
 };
 use anyhow::{bail, Context, Ok, Result};
@@ -23,6 +23,10 @@ pub struct PostItem {
     /// post card background color
     #[serde(skip_serializing_if = "Option::is_none")]
     pub background_color: Option<String>,
+
+    /// post placeholder
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub placeholder: Option<String>,
 }
 
 impl Default for PostItem {
@@ -32,6 +36,7 @@ impl Default for PostItem {
             cuid: None,
             content: None,
             background_color: None,
+            placeholder: None,
         }
     }
 }
@@ -115,6 +120,10 @@ impl Posts {
 
         if item.uid.is_none() {
             item.uid = Some(help::get_uid("pi"));
+        }
+
+        if item.placeholder.is_none() {
+            item.placeholder = Some(get_placeholder())
         }
 
         if self.items.is_none() {

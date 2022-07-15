@@ -192,6 +192,7 @@ const Home: React.FC<IHomeProps> = (props) => {
                   key={i.uid}
                   defaultValue={i.content}
                   backgroundColor={i.background_color}
+                  placeholder={i.placeholder}
                   onBlur={async (e: any) => {
                     await updatePost(i.uid, { content: e.target.value.trim() })
                     await getPostsList()
